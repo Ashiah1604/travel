@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voyage — Premium Travel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1722; --muted:#9aa4b2; --accent:#00b4d8; --accent-2:#7c3aed; --glass: rgba(255,255,255,0.06);
+      --radius:14px; --container:1100px
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;color:#e6eef8;background:linear-gradient(180deg,#071129 0%, #081823 60%)}
+    .wrap{max-width:var(--container);margin:36px auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:grid;place-items:center;color:white;font-weight:800;box-shadow:0 6px 30px rgba(12,18,32,0.6)}
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;margin-top:26px;align-items:center}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:18px;backdrop-filter:blur(8px);box-shadow:0 10px 40px rgba(2,6,23,0.6)}
+    h1{margin:0;font-size:40px;line-height:1.02}
+    p.lead{color:var(--muted);margin-top:10px;font-size:15px}
+
+    .search{margin-top:18px;display:flex;gap:10px}
+    .search input, .search select{flex:1;padding:12px;border-radius:12px;border:0;background:var(--glass);color:var(--muted);outline:none}
+    .search button{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;padding:12px 18px;color:white;border-radius:12px;font-weight:700;cursor:pointer}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+    .dest{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;position:relative}
+    .dest img{width:100%;height:180px;object-fit:cover;display:block}
+    .dest .info{padding:14px}
+    .tag{position:absolute;left:12px;top:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:8px 12px;border-radius:10px;color:white;font-weight:700;font-size:13px}
+    .price{font-weight:800;margin-top:6px}
+
+    aside.right{padding:22px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+    .card-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .popular{display:flex;gap:12px;flex-direction:column}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.5);z-index:40}
+    .modal.open{display:flex}
+    .modal-card{width:520px;background:#071826;padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,0.03)}
+
+    @media(max-width:980px){.hero{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.wrap{padding:18px}}
+    @media(max-width:600px){.cards{grid-template-columns:1fr}.logo{width:44px;height:44px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">V</div>
+        <div>
+          <div style="font-weight:800">Voyage</div>
+          <div style="font-size:12px;color:var(--muted)">Curated luxury escapes</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#destinations">Destinations</a>
+        <a href="#offers">Offers</a>
+        <a href="#contact" id="contact-open">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Discover premium escapes<br><span style="color:var(--accent)">tailored for you</span></h1>
+        <p class="lead">Handpicked hotels, private transfers, and unique experiences. Find your next unforgettable trip in minutes.</p>
+
+        <div class="search" role="search">
+          <input id="q" placeholder="Where do you want to go? e.g. Bali" aria-label="destination" />
+          <select id="when" aria-label="when"><option>Flexible dates</option><option>June 2026</option><option>July 2026</option></select>
+          <button id="search-btn">Search</button>
+        </div>
+
+        <div class="cards" id="destinations">
+          <article class="dest">
+            <div class="tag">Bali</div>
+            <img src="https://images.unsplash.com/photo-1502920917128-1aa500764b5c?q=80&w=1200&auto=format&fit=crop&crop=entropy" alt="Bali">
+            <div class="info">
+              <div style="font-weight:700">Ubud Retreat</div>
+              <div class="price">from ₹9,999</div>
+            </div>
+          </article>
+
+          <article class="dest">
+            <div class="tag">Paris</div>
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1200&auto=format&fit=crop&crop=entropy" alt="Paris">
+            <div class="info">
+              <div style="font-weight:700">City of Lights</div>
+              <div class="price">from ₹18,500</div>
+            </div>
+          </article>
+
+          <article class="dest">
+            <div class="tag">Maldives</div>
+            <img src="https://images.unsplash.com/photo-1505765055750-7a9fb4b7df0d?q=80&w=1200&auto=format&fit=crop&crop=entropy" alt="Maldives">
+            <div class="info">
+              <div style="font-weight:700">Overwater Villas</div>
+              <div class="price">from ₹29,999</div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="card-row">
+          <div style="font-weight:800">Exclusive offers</div>
+          <div style="color:var(--muted);font-size:13px">Limited time</div>
+        </div>
+        <div class="popular">
+          <div style="padding:12px;background:rgba(255,255,255,0.02);border-radius:12px">Private yacht charter — from ₹1,50,000 <button style="float:right;background:transparent;border:0;color:var(--accent);font-weight:700;cursor:pointer" id="book-now">Book</button></div>
+          <div style="padding:12px;background:rgba(255,255,255,0.02);border-radius:12px">Guided culinary tour — from ₹12,000</div>
+        </div>
+
+        <div style="margin-top:18px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border-radius:12px">
+          <div style="font-weight:700">Why Voyage?</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Concierge-level planning, transparent pricing, 24/7 local support.</div>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <div>© 2025 Voyage — Crafted travel experiences · <a href="#" style="color:var(--accent)">Terms</a> · <a href="#" style="color:var(--accent)">Privacy</a></div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-weight:800">Start your booking</div>
+        <button id="modal-close" style="background:transparent;border:0;color:var(--muted);font-weight:700;cursor:pointer">✕</button>
+      </div>
+      <form id="booking-form">
+        <label style="font-size:13px;color:var(--muted)">Full name</label>
+        <input type="text" id="bname" required style="width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef8">
+        <label style="font-size:13px;color:var(--muted);margin-top:10px">Email</label>
+        <input type="email" id="bemail" required style="width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef8">
+        <div style="display:flex;gap:10px;margin-top:12px;justify-content:flex-end">
+          <button type="button" id="cancel-btn" style="background:transparent;border:0;color:var(--muted);cursor:pointer">Cancel</button>
+          <button type="submit" style="background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;padding:10px 14px;border-radius:10px;color:white;cursor:pointer">Request quote</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Simple interactions: search alert, open/close modal, booking stub
+    document.getElementById('search-btn').addEventListener('click', function(){
+      const q = document.getElementById('q').value.trim() || 'your chosen destination';
+      alert('Searching for ' + q + ' — this is a demo.');
+    });
+
+    const modal = document.getElementById('modal');
+    const openBtns = [document.getElementById('book-now'), document.getElementById('contact-open')];
+    openBtns.forEach(b => b && b.addEventListener('click', function(e){ e.preventDefault(); modal.classList.add('open'); }));
+    document.getElementById('modal-close').addEventListener('click', ()=> modal.classList.remove('open'));
+    document.getElementById('cancel-btn').addEventListener('click', ()=> modal.classList.remove('open'));
+
+    document.getElementById('booking-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('bname').value;
+      const email = document.getElementById('bemail').value;
+      alert('Thanks ' + name + '! We received your request and will email ' + email + ' (demo).');
+      modal.classList.remove('open');
+      this.reset();
+    });
+
+    // small lazy-loading for images (progressive improvement)
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('img').forEach(img=>{ if('loading' in HTMLImageElement.prototype) img.loading='lazy'; });
+    });
+  </script>
+</body>
+</html>
